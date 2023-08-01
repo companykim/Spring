@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>할일 - 부트스트랩스타일, 동적 정보 생성과 삭제</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container bg-warning shadow mx-auto mt-5 p-5 w-75">
+		<h2>MyToDo App</h2>
+		<hr>
+		<div>
+			<input id="todoItem" type="text">
+			<button onclick="addTodoItem()">추가</button>	
+		</div>
+		<hr>
+		<ul id="listTodo"></ul>
+	</div>
+</body>
+<script>
+	function addTodoItem() {
+		let inTodo = document.getElementById("todoItem");
+		let listTodo = document.getElementById("listTodo");
+		//입력전 내용을 할일 list item으로 만들기
+		let liNew = document.createElement("li");
+		liNew.innerText = inTodo.value;
+		let btnX = document.createElement("button");
+		btnX.className = "btn-close ms-auto";
+		btnX.onclick = function(e) {
+			let liChoosen = e.target.parentNode;
+			listTodo.removeChild(liChoosen);
+		};
+		liNew.appendChild(btnX);
+		// 이름 ul(목록)에 담기
+		listTodo.appendChild(liNew);
+	}
+</script>
+</html>
