@@ -2,20 +2,15 @@ package www.dream.vp.model;
 
 import www.dream.vp.visitor.Visitor;
 
-public class Composer extends Element {
-	private char displayChar;
+public abstract class Composer extends Element {
 	private Element left, right; 
 
-	public Composer(char displayChar, Element left, Element right) {
-		this.displayChar = displayChar;
+	public Composer(Element left, Element right) {
+		
 		this.left = left;
 		this.right = right;
 	}
-    
-    public String whoAreYou() {
-    	return Character.toString(displayChar);
-    }
-    
+	
 	public Element getLeft() {
 		return left;
 	}
