@@ -49,7 +49,8 @@
      - HTML 페이지에 자바 코드를 직접 사용한다.
      - 서블릿 컨테이너에 의해 관리되는 내장객체의 생명 주기를 이용하여 페이지 간 속성을 관리한다.
      - 커스텀 태그 기술을 사용하여 코드를 태그화(action, JSTL 등)한다.
-     - EL을 통해 데이터를 표현한다. 
+     - EL을 통해 데이터를 표현한다.
+      
 - JSP의 동작 과정
      1. 'hello.jsp' 소스코드를 작성하고 웹 애플리케이션을 배포한다.
      2. 클라이언트 요청에 컨테이너는 해당.jsp의 클래스 반환 여부를 확인한다.
@@ -72,12 +73,14 @@
         - 커스텀 태그를 사용하기 위한 지시어
              > <%@ taglib (url="태그 라이브러리 경로" 혹은 tagdir="태그 파일 경로" )
                 prefix="태그 접두어" %>
+     
       - 템플릿 데이터
         - JSP의 화면 구성요소
            - 스크립트
                 1. <%! %> : 선언 태그
                 2. <%= %> : 표현 태그
                 3. <% %> : 스크립트릿 태그
+  
       - 액션 태그
            | 액션 태그 | 설명 |
            | :--: | :--: |
@@ -87,3 +90,29 @@
            | jsp:setProperty | request와 response 객체를 포함해 다른 페이지로 포워드함 |
            | jsp:getProperty | request와 response 객체를 포함해 다른 페이지로 포워드함 |
            | jsp:param | request와 response 객체를 포함해 다른 페이지로 포워드함 |
+        
+      - 자바 빈
+        - 인자가 없는 생성자(기본 생성자)로 구성된다.
+        - 파일 혹은 네트워크를 통해 객체를 주고받을 수 있는 직렬화 구조가 가능하다.
+        - getter, setter 메서드를 통해 멤버 변수(속성)에 접근한다.
+        - POJ0라는 단순한 구조를 가진다.
+        - 
+      - useBean 액션
+        1. useBean을 이용해 만든 객체의 범위는 지정하는 속성인 scope에 주어진 id의 객체가 있는지 확인한다.
+        2. 객체가 없다면 새로 객체를 생성하고 해당 scope에 저장한다.
+        3. property 속성에는 멤버 변수명 혹은 *을 사용해 전체 변수를 한 번에 지정할 수 있다.
+        4. 
+           > <jsp:useBean id="instanceName" scope="page | request | session | application"<br>
+                       class="packageName.className" type="packageName.className"<br>
+                       beanName="packageName.className" >
+              </jsp:useBean>
+      
+      - 커스텀 태그
+        - 사용자 정의 태그를 의미한다. 즉, 스크립트릿 사용을 줄이고 태그와 같은 형태로 프로그램 코드를 대체하거나 재활용 가능한 구졸르 통해 태그 라이브로리로 활용하고자 개발된 규격.
+        - 최근엔 JSTL을 더 많이 활용함.
+          > <%@ taglib tagdir="/WEB-INF/tags" prefix="m" %> <br>
+            <m:printData pid="87459989" />
+      - EL (표현 언어)
+        - 현재 페이지의 자바 객체 혹은 application, session, request, page와 같은 scope object에 저장된 자바 빈 객체를 손쉽게 접근하고 사용 가능하다.
+        - 간단한 구문으로 손쉽게 변수/객체를 참조할 수 있다.
+        - 데이터가 없거나 null 객체를 참조할 때 에러가 발생하지 않는다.
