@@ -72,3 +72,18 @@
         - 커스텀 태그를 사용하기 위한 지시어
              > <%@ taglib (url="태그 라이브러리 경로" 혹은 tagdir="태그 파일 경로" )
                 prefix="태그 접두어" %>
+      - 템플릿 데이터
+        - JSP의 화면 구성요소
+           - 스크립트
+                1. <%! %> : 선언 태그
+                2. <%= %> : 표현 태그
+                3. <% %> : 스크립트릿 태그
+      - 액션 태그
+           | 액션 태그 | 설명 |
+           | :--: | :--: |
+           | jsp:forward | request와 response 객체를 포함해 다른 페이지로 포워드함 |
+           | jsp:include | 다른 페이지의 실행 결과를 포함시킴 |
+           | jsp:useBean | 자바 빈즈 객체를 생성하거나 불러옴 |
+           | jsp:setProperty | request와 response 객체를 포함해 다른 페이지로 포워드함 |
+           | jsp:getProperty | request와 response 객체를 포함해 다른 페이지로 포워드함 |
+           | jsp:param | request와 response 객체를 포함해 다른 페이지로 포워드함 |
