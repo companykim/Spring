@@ -101,11 +101,10 @@
         1. useBean을 이용해 만든 객체의 범위는 지정하는 속성인 scope에 주어진 id의 객체가 있는지 확인한다.
         2. 객체가 없다면 새로 객체를 생성하고 해당 scope에 저장한다.
         3. property 속성에는 멤버 변수명 혹은 *을 사용해 전체 변수를 한 번에 지정할 수 있다.
-        4. 
-           > <jsp:useBean id="instanceName" scope="page | request | session | application"<br>
-                       class="packageName.className" type="packageName.className"<br>
-                       beanName="packageName.className" >
-              </jsp:useBean>
+        > <jsp:useBean id="instanceName" scope="page | request | session | application"<br>
+                class="packageName.className" type="packageName.className"<br>
+                 beanName="packageName.className" >
+           </jsp:useBean>
       
       - 커스텀 태그
         - 사용자 정의 태그를 의미한다. 즉, 스크립트릿 사용을 줄이고 태그와 같은 형태로 프로그램 코드를 대체하거나 재활용 가능한 구졸르 통해 태그 라이브로리로 활용하고자 개발된 규격.
@@ -116,3 +115,47 @@
         - 현재 페이지의 자바 객체 혹은 application, session, request, page와 같은 scope object에 저장된 자바 빈 객체를 손쉽게 접근하고 사용 가능하다.
         - 간단한 구문으로 손쉽게 변수/객체를 참조할 수 있다.
         - 데이터가 없거나 null 객체를 참조할 때 에러가 발생하지 않는다.
+          > ${저장이름.변수명}
+          > <br>
+          > <br>
+          > (h2)멤버 정보(/h2) <br>
+             이름: ${m.name} <br>
+          > <br>
+          > 이름: <%= m.name %> (br) // 표현식 사용
+          > <br>
+          > <br>
+          > 이름: <jsp:getProperty name="m" property="name" /> (br) // 액션 사용 <br>
+          > <br>
+          > EL 연산 <br>
+          > ${10 + 20} // 사칙연산, 30 <br>
+          > ${10 * 20} // 사칙연산, 200 <br>
+          > ${true && false} // 사칙연산, false <br>
+          > ${10 >= 20} // 사칙연산, false <br>
+          > ${user.name = = "홍길동" ? "교수" : "학생"} // 3항 연산, 이름이 홍길동이면 교수 출력 <br>
+          > <br>
+          > 배열, 맵 데이터 연동 <br>
+          > ${myList[0]} // 배열인 경우 <br>
+          > ${myMap["name"]} // 맵인 경우 <br>
+          > <br>
+          > Scope Object 접근 <br>
+          > 이름: ${requestScope.m.name} <br>
+      - JSTL
+        - 서버에서만 해석할 수 있는 구조
+        - UI 확인을 위해 서버를 통해야만 함.
+          > <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+      - core 라이브러리 - 흐름 제어를 제일 많이 사용함.
+        | 기능 | 태그 | 사용 예 |
+        | :--: | :--: | :--: |
+        | 변수 관련 | remove, set | 변수 지정과 삭제 |
+        | 흐름 제어 | if, choose, when, otherwise, forEach, forTokens | 조건 처리, 반복, 토큰 피싱 |
+        | URL 관리 | import, redirect, url, param | URL 핸들링 |
+        | 기타 | catch, out | 에러 처리, 출력 |
+         - <c:if> - 자바의 if문과 유사하지만 else는 지원x
+           > <c:if test="조건" [var="결과 변수"] [scope="{page|request|session|application}"]> <br>
+           >    조건이 참(true)인 경우 출력되는 부분 <br>
+           > </c:if>
+        - <c:forEach> - 화면에 데이터를 반복해서 출력할 때 주로 사용
+          > <c:forEach [var="참조 객체"] [varStatus="상태 정보 변수"] begin="시작" end="종료" <br>
+          > [step="반복 단계 증가 값, 1이 기본"]> <br>
+          > 반복 출력되는 부분 <br>
+          > </c:forEach> 
