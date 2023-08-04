@@ -59,5 +59,16 @@
      6. 컨테이너 종료 혹은 관리 도구에 의해 서블릿 jspDestroy() 호출로 종료된다.
  
 - JSP 지시어
-     -JSP 컨테이너에 해당 페이지를 어떻게 처리해야 하는지를 전달하는 내용을 담음.
+     - JSP 컨테이너에 해당 페이지를 어떻게 처리해야 하는지를 전달하는 내용을 담음.
      > <%@ 지시어 속성="값" %>
+     - page 지시어
+       - 현재 jsp 페이지를 컨테이너에서 처리하는데 필요한 각종 속성을 기술하기 위해 사용
+         > <%@ page language="java" contentType="text/html; charset=UTF-8"
+                    pageEncoding="UTF-8" import="java.util.*" error.jsp"%>
+   - include 지시어(분할정복)
+        - 다른 파일을 포함하는 위한 지시어로, 사용된 위치에 특정 파일을 불러온다.
+           > <%@ include file="파일 위치" %>
+   - taglib 지시어
+        - 커스텀 태그를 사용하기 위한 지시어
+             > <%@ taglib (url="태그 라이브러리 경로" 혹은 tagdir="태그 파일 경로" )
+                prefix="태그 접두어" %>
