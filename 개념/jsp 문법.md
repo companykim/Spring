@@ -158,4 +158,8 @@
           > <c:forEach [var="참조 객체"] [varStatus="상태 정보 변수"] begin="시작" end="종료" <br>
           > [step="반복 단계 증가 값, 1이 기본"]> <br>
           > 반복 출력되는 부분 <br>
-          > </c:forEach> 
+          > </c:forEach>
+   - Maven 기반 프로젝트
+      - maven은 빌드 설정을 'pom.xml' 파일에 작성하는데, xml 구조라 프로젝트에 따라 가독성이 떨어질 수 있다.
+      - gradle은 groovy라고 하는 JVM 기반 언어를 통해 프로그램 구조를 설정하기에 maven보다 짧고 간결하다.
+      
