@@ -1,1 +1,1 @@
-jtujgutjtu
+# MVC 패턴
