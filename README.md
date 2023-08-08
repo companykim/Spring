@@ -15,3 +15,4 @@ JDBC, 리스너, 필터, REST-API, JAX-RS에 대해 배움.
 심화학습 했는데 어려워서 뭐했는지 모르겠다..
 
 ## 8/7 <br>
+spring 처음으로 다뤄보고 개발 환경 설정, 스프링 빈, webMVC, RESTController, 오토와이어링을 실습함.
