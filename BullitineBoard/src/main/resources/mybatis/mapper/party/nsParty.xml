@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="www.dream.bbs.party.model.mapper.PartyMapper">
+<mapper namespace="www.dream.bbs.party.mapper.PartyMapper">
 	<resultMap id="rmPartyVO" extends="nsEntity.rmMasterEntity"
 		type="www.dream.bbs.party.model.PartyVO">
 		<result property="name" column="name" />

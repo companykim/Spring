@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import www.dream.bbs.party.mapper.PartyMapper;
 import www.dream.bbs.party.model.PartyVO;
-import www.dream.bbs.party.model.mapper.PartyMapper;
 
 @Service   // Container에 담기도록 지정
 public class PartyService {

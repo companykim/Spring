@@ -1,4 +1,4 @@
-package www.dream.bbs.party.model;
+package www.dream.bbs.board.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
@@ -24,7 +24,7 @@ public class BoardVO extends Entity {
 
 	@Override
 	public String toString() { // 부모 클래스가 정의한 함수를 덮어씌워 다시 정의하여 사용하는 것
-		return "BoardVO [" + super.toString() + ", name=" + name + ", descrip=" + descrip + ", postCnt=" + postCnt + "]/n";
+		return "BoardVO [" + super.toString() + ", name=" + name + ", descrip=" + descrip + ", postCnt=" + postCnt + "]";
 	}
 
 }

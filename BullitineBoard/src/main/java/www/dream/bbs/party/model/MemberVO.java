@@ -19,5 +19,4 @@ public class MemberVO extends PartyVO {
 	public String toString() {
 		return "MemberVO [" + super.toString() + "]";
 	}
-	
 }
