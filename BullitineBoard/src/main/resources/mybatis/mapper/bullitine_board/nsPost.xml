@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="www.dream.bbs.board.mapper.PostMapper">
+	<resultMap id="rmRipplyVO" extends="nsEntity.rmMasterEntity" 
+		type="www.dream.bbs.board.model.RipplyVO">
+		<result property="content" column="content" />
+		<result property="hierarchId" column="????" />
+		<association property="writer" columnPrefix="w_"
+		 	resultMap="www.dream.bbs.party.mapper.PartyMapper.rmPartyVO"/>	 
+		 <collection property="listRipply" columnPrefix="reply_"
+			resultMap="rmRipplyVO">
+		</collection>	
+		 <discriminator javaType="String" column="descrim">
+			<case value="post" resultMap="rmPostVO" />
+		</discriminator>
+	</resultMap>
+	
+	<resultMap id="rmPostVO" extends="rmRipplyVO"
+		type="www.dream.bbs.board.model.PostVO">
+		<result property="title" column="TITLE" />
+		<result property="readCnt" column="read_cnt" />
+		<result property="likeCnt" column="like_cnt" />
+		<result property="disCnt" column="dis_cnt" />	 	
+	</resultMap>
+	
+	<!-- public List<PostVO> listAllPost(String boardId); -->
+	<select id="listAllPost" resultMap="rmPostVO">
+	select p.*, w.id w_id, w.descrim w_descrim, w.name w_name, w.sex w_sex, w.reg_dt w_reg_dt, w.upt_dt w_upt_dt
+	 from T_reply p, T_party w
+	where p.bb_id = #{boardId}
+	  and p.writer_id = w.id
+	</select>
+	<!-- public PostVO findById(String id) -->
+	<select id="findById" resultMap="rmPostVO">
+	select p.*, r.id reply_id, r.descrim reply_descrim, r.writer_id reply_writer_id, r.content reply_content, r.reg_dt reply_reg_dt, r.upt_dt reply_upt_dt
+	 from T_reply p, T_comp_hierarch h
+	    LEFT OUTER JOIN T_reply r
+	  on p.id = cp.owner_id,
+	where p.id = #{id}
+	  and h.comp_hierarch like CONCAT(#{id}, '%')
+	  and h.kind = 't2b'
+	</select>
+	
+	<!-- public int createPost(PostVO post); -->
+	<insert id="createPost">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+   	 		select NEXT_PK('s_post')
+  		</selectKey>
+  		INSERT INTO T_reply(id, descrim, writer_id, content, bb_id, TITLE)
+  		VALUES (#{id}, 'post', #{writer.id}, #{content}, #{boardVO.id}, #{title});
+	</insert>
+	<!-- public int createRipply(@Param("parent") RipplyVO parent, @Param("reply")RipplyVO reply); -->
+	<insert id="createRipply">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+   	 		select NEXT_PK('s_reply')
+  		</selectKey>
+  		INSERT INTO T_reply(id, descrim, writer_id, content)
+  		VALUES (#{id}, 'reply', #{reply.writer.id}, #{reply.content});
+  		
+  		INSERT INTO T_comp_hierarch(comp_hierarch, kind)
+  		VALUES (CONCAT(#(parent.hierarchId), #{id}), 't2b');
+	</insert>
+	
+	<!-- public int updatePost(PostVO post); -->
+	<update id="updatePost">
+	update T_reply
+		set TITLE = ${title},
+			content = #{content}
+		where id = #{id}
+	</update>
+	<!-- public int updateRipply(PostVO reply); -->
+	<update id="updateRipply">
+		update T_reply
+		set content = #{content}
+		where id = #{id}
+	</update>
+	
+	<!-- public int deleteRipply(String id); -->
+	<delete id="deleteRipply">
+	delete from T_reply
+	  where id = #{id};
+	  
+	delete from T_comp_hierarch
+	where comp_hierarch = CONCAT(#{hierarchid}, '%');
+	
+	(comp_hierarch, kind)
+  	  VALUES (CONCAT(#(parent.hierarchId), #{id}), 't2b');
+	</delete>
+</mapper>

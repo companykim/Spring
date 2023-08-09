@@ -11,6 +11,7 @@ import www.dream.bbs.board.framework.model.MasterEntity;
 
 @Getter
 @NoArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public abstract class PartyVO extends MasterEntity {
 	private String name;
 	private boolean sex;

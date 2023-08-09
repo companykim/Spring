@@ -6,7 +6,7 @@ drop table T_reply;
 drop table T_party;
 drop table T_bulitine_board;
 
---id, name, descrip, post_cnt
+-- 	id, name, descrip, post_cnt
 create table T_bulitine_board(
 	id       	char(4) primary key,
 	name	 	varchar(255) not null,
@@ -45,19 +45,20 @@ create table T_contact_Point(
 	primary key(owner_id, cp_type)
 );
 
--- id, writer_id, context, reg_dt, upt_dt, TITLE, read_cnt, like_cnt, dis_cnt	
+-- id, descrim, writer_id, content, reg_dt, upt_dt, bb_id, TITLE, read_cnt, like_cnt, dis_cnt	
 create table T_reply(
 	id          char(4) primary key,
+	descrim  varchar(255) not null, /* 'reply', 'post' */
 	writer_id   char(4) not null,
-	context 	TEXT(65000),
+	content 	TEXT(65000),
 	reg_dt   	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	upt_dt	 	TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	/* 아래 속성은 게시글 일때만 활용되는 */
-	bb_id 		char(4) not null,
+	bb_id 		char(4),
 	TITLE 		varchar(255),
-	read_cnt    int,
-	like_cnt	int,
-	dis_cnt		int
+	read_cnt    int default 0,
+	like_cnt	   int default 0,
+	dis_cnt        int default 0
 );
 
 -- id, word, desription, df
@@ -83,7 +84,22 @@ create index idx_tgt_tag on T_TGT_TAG(tgt_name, tgt_id, tag_id);
 
 /* top2bottom bottom2top */
 create table T_comp_hierarch(
-	comp_hierarch	varchar(255) primary key,
-		kind			char(3)    /* t2b, b2t */
+	id          char(4)	primary key,
+	comp_hierarch	varchar(255),
+	kind			char(3)    /* t2b, b2t */
 );
+
+create index idx_comp_hierar on T_comp_hierarch(comp_hierarch); 
 	
+T_reply(
+      ukjy, 'post'
+      r000, 'post'
+      op09, 'reply'
+      iiii,      'reply'
+      kkkk,      'reply'
+
+      ukjy, ukjy
+      r000, r000
+      op09 ukjyop09
+       iiii    ukjyop09iiii 
+      kkkk   ukjyop09kkkk
