@@ -19,6 +19,10 @@ public abstract class PartyVO extends MasterEntity {
 	// 연락처 목록
 	private List<ContactPointVO> listContactPoint = new ArrayList<>(); 
 	
+	public PartyVO(String id) {
+		super(id);
+	}
+	
 	public PartyVO(String name, boolean sex) {
 		this.name = name;
 		this.sex = sex;

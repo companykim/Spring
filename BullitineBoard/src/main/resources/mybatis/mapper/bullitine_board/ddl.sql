@@ -47,9 +47,10 @@ create table T_contact_Point(
 
 -- id, descrim, writer_id, content, reg_dt, upt_dt, bb_id, TITLE, read_cnt, like_cnt, dis_cnt	
 create table T_reply(
-	id          char(4) primary key,
-	descrim  varchar(255) not null, /* 'reply', 'post' */
-	writer_id   char(4) not null,
+	id     	varchar(255) primary key,
+	h_tier      int comment '층 번호, 게시물 - 0, 댓글 1, 대댓 2', 
+	descrim     varchar(255) not null comment 'reply, post 구분자',
+	writer_id   char(4),
 	content 	TEXT(65000),
 	reg_dt   	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	upt_dt	 	TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -57,9 +58,11 @@ create table T_reply(
 	bb_id 		char(4),
 	TITLE 		varchar(255),
 	read_cnt    int default 0,
-	like_cnt	   int default 0,
-	dis_cnt        int default 0
+	like_cnt	int default 0,
+	dis_cnt     int default 0
 );
+
+create index idx_post_board on T_reply(bb_id); 
 
 -- id, word, desription, df
 -- 통합 검색 체계
@@ -91,15 +94,3 @@ create table T_comp_hierarch(
 
 create index idx_comp_hierar on T_comp_hierarch(comp_hierarch); 
 	
-T_reply(
-      ukjy, 'post'
-      r000, 'post'
-      op09, 'reply'
-      iiii,      'reply'
-      kkkk,      'reply'
-
-      ukjy, ukjy
-      r000, r000
-      op09 ukjyop09
-       iiii    ukjyop09iiii 
-      kkkk   ukjyop09kkkk

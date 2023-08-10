@@ -8,7 +8,7 @@
 		type="www.dream.bbs.party.model.PartyVO">
 		<result property="name" column="name" />
 		<result property="sex" column="sex" />
-		<collection property="listContactPoint"
+		<collection property="listContactPoint" columnPrefix="cp_"
 			resultMap="rmContactPointVO">
 		</collection>
 		<discriminator javaType="String" column="descrim">

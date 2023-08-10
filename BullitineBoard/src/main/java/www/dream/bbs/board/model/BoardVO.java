@@ -14,6 +14,10 @@ public class BoardVO extends Entity {
 	private String descrip; 
 	private long postCnt = 0;  //총 게시물 개수
 
+	public BoardVO(String id) {
+		super(id);
+	}
+	
 	/**
 	 * 사용자로부터 정보가 만들어 질 때 사용
 	 */
