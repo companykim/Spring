@@ -40,7 +40,7 @@ public class PostControllerTest {
 				.addFilters(new CharacterEncodingFilter("UTF-8", true)) // utf-8 필터 추가
 				.build();
 	}
-
+	
 	@Test
 	@DisplayName("게시글 목록 테스트")
 	void listAllPost() {

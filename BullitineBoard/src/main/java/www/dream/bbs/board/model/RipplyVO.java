@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import www.dream.bbs.board.framework.model.MasterEntity;
+import www.dream.bbs.board.framework.property.anno.TargetProperty;
 import www.dream.bbs.party.model.PartyVO;
 
 @Getter
@@ -17,11 +18,12 @@ import www.dream.bbs.party.model.PartyVO;
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class RipplyVO extends MasterEntity {
+	@TargetProperty
 	private PartyVO writer; // 게시물 작성자
+	@TargetProperty
 	private String content; // 내용
 	private int hTier;
 	// 대댓 구조 만들기는 어떻게?
-	@JsonIgnore
 	private List<RipplyVO> listReply;
 	
 	public String extractParentId() {

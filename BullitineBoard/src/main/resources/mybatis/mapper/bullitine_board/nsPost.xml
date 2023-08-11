@@ -4,17 +4,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="www.dream.bbs.board.mapper.PostMapper">
+	<!-- resultMap : projection 결과를 객체 속성에 바인딩 -->
 	<resultMap id="rmRipplyVO" extends="nsEntity.rmMasterEntity" 
 		type="www.dream.bbs.board.model.RipplyVO">
 		<result property="content" column="content" />
 		<result property="hTier" column="h_tier" />
+		<!-- association : 	One 2 one 관계까지 속성에 한번에 넣기. 예 : 게시글의 작성자 누구? -->
+		<!-- columnPrefix : column 이름 중첩 시 그 해결방안 -->
+		<!-- notNullColumn : 정보가 있어야 객체 만들지요 -->
 		<association property="writer" columnPrefix="w_" notNullColumn="id"
 		 	resultMap="www.dream.bbs.party.mapper.PartyMapper.rmPartyVO"/>	 
+		 	<!-- discriminator : 상속 구조 해결책 -->
 		 <discriminator javaType="String" column="descrim">
 			<case value="post" resultMap="rmPostVO" />
 		</discriminator>
 	</resultMap>
 	
+	<!-- extends : 확장하기 = 상속 -->
 	<resultMap id="rmPostVO" extends="rmRipplyVO"
 		type="www.dream.bbs.board.model.PostVO">
 		<result property="title" column="TITLE" />
