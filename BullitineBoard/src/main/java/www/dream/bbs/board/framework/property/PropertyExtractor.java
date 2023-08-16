@@ -7,7 +7,7 @@ import java.util.List;
 
 import www.dream.bbs.board.framework.property.anno.TargetProperty;
 import www.dream.bbs.board.model.PostVO;
-import www.dream.bbs.party.model.MemberVO;
+//import www.dream.bbs.party.model.MemberVO;
 
 public class PropertyExtractor {
 	/**
@@ -59,7 +59,7 @@ public class PropertyExtractor {
 		}
 		return ret;
 	}
-
+	/*
 	public static void main(String[] args) {
 		PostVO tgt = new PostVO();
 		tgt.setTitle("hrjhjghjnull");
@@ -70,5 +70,5 @@ public class PropertyExtractor {
 		List<String> rrr = extractProperty(tgt);
 		for (String s : rrr)
 			System.out.println(s);
-	}
+	}*/
 }

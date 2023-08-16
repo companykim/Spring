@@ -16,27 +16,23 @@ import www.dream.bbs.board.framework.property.anno.TargetProperty;
 public abstract class PartyVO extends MasterEntity {
 	@TargetProperty
 	private String name;
-	private boolean sex;
+	private String nick;  
+	//@JsonIgnore // pwd는 화면에 노출하는 대상이 아님! 보안!
+	private String pwd;     
 	
 	// 연락처 목록
 	private List<ContactPointVO> listContactPoint = new ArrayList<>(); 
-	
-	public PartyVO(String id) {
-		super(id);
-	}
-	
-	public PartyVO(String name, boolean sex) {
+	private List<AccountabilityVO> listAccountability = new ArrayList<>(); 
+
+	public PartyVO(String name, String nick, String pwd, List<ContactPointVO> listContactPoint) {
 		this.name = name;
-		this.sex = sex;
+		this.nick = nick;
+		this.pwd = pwd;
+		this.listContactPoint = listContactPoint;
 	}
 	
 	public void addCP(ContactPointVO cp) {
 		// null pointer
 		listContactPoint.add(cp);
-	}
-	
-	@Override
-	public String toString() {
-		return super.toString() + ", name=" + name + ", sex=" + sex + ", 연락처들=" + listContactPoint;
 	}
 }

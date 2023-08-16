@@ -14,6 +14,6 @@ public class PartyService {
 	private PartyMapper partyMapper;
 	
 	public List<PartyVO> listAll() {
-		return partyMapper.listAll();
+		return null;
 	}
 }

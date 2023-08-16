@@ -5,7 +5,10 @@
 
 <mapper namespace="nsEntity">
 	<resultMap id="rmEntity" type="www.dream.bbs.board.framework.model.Entity">
-		<!-- id : 동일 객체 판별하여 다시 만들지 말자. -->
+		<!-- id, idArg : 동일 객체 판별하여 다시 만들지 말자. 
+		<constructor>
+		<idArg javaType="String" column="id"/>
+		</constructor> -->
 		<id property="id" column="id" />
 	</resultMap>
 
