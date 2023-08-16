@@ -16,23 +16,47 @@ create table T_bulitine_board(
 
 insert into T_bulitine_board(id, name, descrip) values(NEXT_PK('s_bulitine_board'), '자유게시판', '자유롭죠');
 
--- 	T_party(id, descrim, name, sex, reg_dt, upt_dt)
+-- 	T_party(id, descrim, name, nick, pwd, sex, alive, reg_dt, upt_dt)
 create table T_party(
 	id       char(4) primary key,
-	descrim  varchar(255) not null DEFAULT 'Member', -- 'Manager', 'Member' 
+	descrim  varchar(255) not null,  /* 'Person', 'Organization' */ 
 	name     varchar(255) not null,
+	nick     varchar(255) not null comment 'login id 용도',
+	pwd      varchar(255) not null,
+	reg_dt   TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '회원가입일',
+	upt_dt	 TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '최종 정보 수정일',
+	--Person
 	sex      boolean comment '1 F, 0 M',
-	reg_dt   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	upt_dt	 TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 );
-	
+
+-- 로그인시 비교 대상인 암호까지 index에서 제공하여 table에 대한 접근을 방어하여 성능을 높임
+drop index idx_party_nick ON T_party;
+create index idx_party_nick on T_party(nick);
+
+	values('????', 'Organization', 'Dream Company', 'sys', 암호화하여 'sys');
+-- id, account_Type, owner_id, respons_id
+create table T_Accountability(
+	id       	char(4) primary key,
+	account_type varchar(255),
+	owner_id 	char(4) comment '주인으로서',
+	respons_id 	char(4) comment '대상으로서',
+	alive 	 boolean DEFAULT true comment '활성 여부',
+	reg_dt   TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '등록일',
+	upt_dt	 TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '최종 정보 수정일'
+);
+
 /* 코드 유형 정의 */
 create table T_CODE(
 	Code_type  varchar(255) not null,
 	code_val   varchar(255)
 );
-insert into T_CODE values('contect point type', 'hand phone number');
+insert into T_CODE values('accountability type', 'manager');
+insert into T_CODE values('accountability type', 'member');
+
 insert into T_CODE values('contect point type', 'home address');
+insert into T_CODE values('contect point type', 'home address');
+-- insert into T_CODE values('contect point type', '본적');
+-- insert into T_CODE values('contect point type', 'email address');
 
 insert into T_CODE values('rel target tag', 'post');
 insert into T_CODE values('rel target tag', 'party');

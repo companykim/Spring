@@ -79,14 +79,46 @@
    	 		select NEXT_PK('s_party')
   		</selectKey>
 		INSERT INTO T_party(id, descrim, name, nick, pwd)
-		VALUES (#{id}, 'Organization', #{name}, #{nick}, #{pwd});
-
+		 VALUES (#{id}, 'Organization', #{name}, #{nick}, #{pwd});
+		 
 		 INSERT INTO T_contact_Point(owner_id, cp_type, cp_val)
 		 VALUES
 		 <foreach item="cp" collection="listContactPoint"
          	separator="," close=";">
 		 	(#{id}, #{cp.cpType}, #{cp.cpVal})
 		 </foreach>
-
 	</insert>
+	
+	<!-- public int createMember(MemberVO member); -->
+		<insert id="createMember">
+		<selectKey keyProperty="id" resultType="String" 
+			order="BEFORE">
+   	 		select NEXT_PK('s_party')
+  		</selectKey>
+  
+		INSERT INTO T_party(id, descrim, name, nick, pwd, sex)
+		 VALUES (#{id}, 'Member', #{name}, #{nick}, #{pwd}, #{sex});
+		 
+		 INSERT INTO T_contact_Point(owner_id, cp_type, cp_val)
+		 VALUES
+		 <foreach item="cp" collection="listContactPoint"
+         	separator="," close=";">
+		 	(#{id}, #{cp.cpType}, #{cp.cpVal})
+		 </foreach>
+	</insert>
+	
+	<!-- public int updateParty(PartyVO party); -->
+	<update id="updateParty">
+	update T_party
+		set pwd = ${pwd}
+	  where id = #{id}
+	</update>
+	
+	<!-- public int deactivateParty(PartyVO party); -->
+	<update id="deactivateParty">
+	update T_party
+		set alive = false
+	  where id = #{id}
+	</update>
+	
 </mapper>
