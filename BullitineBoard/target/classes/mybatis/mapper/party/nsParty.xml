@@ -44,15 +44,16 @@
 		<result property="accountType" column="account_type" />
 		<result property="ownerId" column="owner_id" />
 		<result property="responsId" column="respons_id" />
+		<result property="alive" column="alive" />
 	</resultMap>
 	
-	<!-- public List<PersonVO> listAllMember(OrganizationVO organizaiton); -->
+	<!-- public List<PersonVO> listAllMember(String ownerId); -->
 	<select id="listAllMember" resultMap="rmPartyVO">
 		SELECT mem.*, cp.cp_type cp_cp_type, cp.cp_val cp_cp_val 
 		  FROM T_Accountability role, T_party mem
 		  		LEFT OUTER JOIN T_contact_Point cp
 		  	on mem.id = cp.owner_id
-		where role.owner_id = #{id}
+		where role.owner_id = #{ownerId}
 		  and role.account_type = 'member'
 		  and role.alive = true
 		  and role.respons_id = mem.id
@@ -62,7 +63,7 @@
 	<select id="findByNick" resultMap="rmPartyVO">
 		SELECT p.*, 
 			role.id role_id, role.account_type role_account_type, role.owner_id role_owner_id, 
-				role.reg_dt role_reg_dt, role.upt_dt role_upt_dt, 
+				role.alive role_alive, role.reg_dt role_reg_dt, role.upt_dt role_upt_dt, 
 			cp.cp_type cp_cp_type, cp.cp_val cp_cp_val 
 		  FROM T_party p 
 			join T_Accountability role on p.id = role.respons_id
@@ -87,6 +88,33 @@
          	separator="," close=";">
 		 	(#{id}, #{cp.cpType}, #{cp.cpVal})
 		 </foreach>
-
+	</insert>
+	<!-- public int createPerson(PersonVO person); -->
+	<insert id="createPerson">
+		<selectKey keyProperty="id" resultType="String" 
+			order="BEFORE">
+   	 		select NEXT_PK('s_party')
+  		</selectKey>
+  
+		INSERT INTO T_party(id, descrim, name, nick, pwd, sex)
+		 VALUES (#{id}, 'Person', #{name}, #{nick}, #{pwd}, #{sex});
+		 
+		 INSERT INTO T_contact_Point(owner_id, cp_type, cp_val)
+		 VALUES
+		 <foreach item="cp" collection="listContactPoint"
+         	separator="," close=";">
+		 	(#{id}, #{cp.cpType}, #{cp.cpVal})
+		 </foreach>
+	</insert>
+	
+	<!-- public int createAccountability(AccountabilityVO accountability); -->
+	<insert id="createAccountability">
+	<selectKey keyProperty="id" resultType="String" 
+			order="BEFORE">
+   	 		select NEXT_PK('s_accountability')
+  		</selectKey>
+  		
+  			INSERT INTO T_Accountability(id, account_type, owner_id, respons_id)
+		 VALUES (#{id}, #{accountType}, #{ownerId}, #{responsId});
 	</insert>
 </mapper>
