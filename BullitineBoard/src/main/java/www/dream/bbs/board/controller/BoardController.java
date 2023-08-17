@@ -28,7 +28,7 @@ public class BoardController {
 	@GetMapping("/{id}")
 	public ResponseEntity<BoardVO> findById(@PathVariable String id) {
 		BoardVO board = boardService.findById(id);
-		return new ResponseEntity<>(board, HttpStatus.OK);
+		return ResponseEntity.ok(board);
 	}
 	
 }

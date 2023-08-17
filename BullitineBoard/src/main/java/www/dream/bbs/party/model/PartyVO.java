@@ -1,7 +1,14 @@
 package www.dream.bbs.party.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
@@ -13,7 +20,7 @@ import www.dream.bbs.board.framework.property.anno.TargetProperty;
 @Getter
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public abstract class PartyVO extends MasterEntity {
+public abstract class PartyVO extends MasterEntity implements UserDetails {
 	@TargetProperty
 	private String name;
 	private String nick;  
@@ -34,5 +41,55 @@ public abstract class PartyVO extends MasterEntity {
 	public void addCP(ContactPointVO cp) {
 		// null pointer
 		listContactPoint.add(cp);
+	}
+
+	public void encodePwd(PasswordEncoder pwdEnc) {
+		pwd = pwdEnc.encode(pwd);
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		/*
+		List<SimpleGrantedAuthority> ret = new ArrayList<>();
+		for (AccountabilityVO acc : listAccountability) {
+			ret.add(acc.getAuthority());
+		}
+		return ret;
+		*/
+		return listAccountability
+				.stream()    // 하나씩 빨대로 뽑아 내어 
+				.map(AccountabilityVO::getAuthority)  // getAuthority 함수로 만든 결과로 map(변환하여)
+				.collect(Collectors.toList());  // 모을것이야
+	}
+
+	@Override
+	public String getPassword() {
+		return pwd;
+	}
+
+	@Override
+	public String getUsername() {
+		return nick;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return listAccountability.stream()
+				.filter(AccountabilityVO::isAlive).count() > 0;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

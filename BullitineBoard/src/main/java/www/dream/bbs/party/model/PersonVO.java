@@ -1,7 +1,10 @@
 package www.dream.bbs.party.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
