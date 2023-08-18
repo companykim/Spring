@@ -14,6 +14,8 @@ import www.dream.bbs.party.model.AccountabilityVO;
 import www.dream.bbs.party.model.OrganizationVO;
 import www.dream.bbs.party.model.PartyVO;
 import www.dream.bbs.party.model.PersonVO;
+import www.dream.bbs.security.dto.SignInResultDto;
+import www.dream.bbs.security.dto.SignUpResultDto;
 
 @Service   // Container에 담기도록 지정
 public class PartyService implements UserDetailsService {
@@ -25,12 +27,6 @@ public class PartyService implements UserDetailsService {
 
 	public List<PersonVO> listAllMember(String ownerId) {
 		return partyMapper.listAllMember(ownerId);
-	}
-	
-	/** 로그인 처리를 위한 것입니다. */
-	public boolean findByNick(String nick, String rawPassword) {
-		PartyVO party = partyMapper.findByNick(nick);
-		return party == null ? false : pwdEnc.matches(rawPassword, party.getPwd());
 	}
 	
 	public int createOrganizaiton(OrganizationVO organizaiton) { // garbage collection
@@ -46,6 +42,7 @@ public class PartyService implements UserDetailsService {
 		return cnt;
 	}
 	
+	/** 회원 가입 */
 	public int createMember(OrganizationVO organizaiton, PersonVO person) {
 		person.encodePwd(pwdEnc);
 		int cnt = partyMapper.createPerson(person);
@@ -53,6 +50,7 @@ public class PartyService implements UserDetailsService {
 		partyMapper.createAccountability(new AccountabilityVO("member", organizaiton.getId(), person.getId()));
 		return cnt;
 	}
+
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,12 +1,17 @@
 package www.dream.bbs.board.framework.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public abstract class Entity { // 자식 클래스에서 반드시 오버라이딩 해야만 사용할 수 있는 메소드
 	/** DDL : idfunc.sql 에서의 id 길이에 맞추는 것  */
 	public static final int ID_LENGTH = 4;

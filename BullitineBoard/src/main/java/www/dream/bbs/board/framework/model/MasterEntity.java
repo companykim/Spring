@@ -2,13 +2,18 @@ package www.dream.bbs.board.framework.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public abstract class MasterEntity extends Entity {
 	private Date regDt;
 	private Date uptDt;

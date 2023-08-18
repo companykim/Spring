@@ -101,8 +101,8 @@
 		 
 		 INSERT INTO T_contact_Point(owner_id, cp_type, cp_val)
 		 VALUES
-		 <foreach item="cp" collection="listContactPoint"
-         	separator="," close=";">
+		 <foreach item="cp" collection="listContactPoint" separator="," 
+		 	close=";">
 		 	(#{id}, #{cp.cpType}, #{cp.cpVal})
 		 </foreach>
 	</insert>

@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import www.dream.bbs.party.model.OrganizationVO;
 import www.dream.bbs.party.model.PartyVO;
 import www.dream.bbs.party.model.PersonVO;
 import www.dream.bbs.party.service.PartyService;
+import www.dream.bbs.security.dto.SignUpResultDto;
 
 @RestController  // Container에 담기도록 지정
 @RequestMapping("/party")
@@ -24,19 +26,6 @@ public class PartyController {
 	@GetMapping("/listAllMember")
 	public ResponseEntity<List<PersonVO>> listAllMember(/* @RequestParam("ownerId") */ String ownerId) {
 		return ResponseEntity.ok(partyService.listAllMember(ownerId));
-	}
-	
-	/*
-	 * <form method="post">
-	 * <input name="nick">
-	 * <input name="pwd">
-	 * </form>
-	 */
-	
-	// /party/login
-	@PostMapping("/annonymous/login")
-	public ResponseEntity<Boolean> findByNick(String nick, String pwd) {
-		return ResponseEntity.ok(partyService.findByNick(nick, pwd));
 	}
 	
 	@PostMapping("/createOrganizaiton")
